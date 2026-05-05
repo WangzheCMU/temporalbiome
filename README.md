@@ -46,7 +46,7 @@ The MRS forward pass implements
 $$
 r(t) \;=\; \sigma\!\bigl(f_{\theta}(\mathbf{z})\,/\,\tau\bigr)
 \quad\text{with}\quad
-\mathbf{z} \;=\; \operatorname{Pool}\!\bigl(\mathbf{H}^{(f)}\bigr),
+\mathbf{z} \;=\; \mathrm{Pool}\!\bigl(\mathbf{H}^{(f)}\bigr),
 $$
 
 where $\mathbf{H}^{(f)} \in \mathbb{R}^{B \times T \times 2d}$ is the gated
@@ -94,7 +94,7 @@ linearly projected into the embedding space, summed with $\mathbf{p}_{t_i}$, and
 processed by an $L$-layer scaled-dot-product Transformer encoder
 
 $$
-\operatorname{Attention}(Q, K, V) \;=\; \operatorname{softmax}\!\Bigl(\tfrac{Q K^{\top}}{\sqrt{d/K}}\Bigr) V, \qquad \text{(Eq.\ 3)}
+\mathrm{Attention}(Q, K, V) \;=\; \mathrm{softmax}\!\Bigl(\tfrac{Q K^{\top}}{\sqrt{d/K}}\Bigr) V, \qquad \text{(Eq.\ 3)}
 $$
 
 with `src_key_padding_mask` semantics propagated end-to-end so that
@@ -110,9 +110,9 @@ same composite positional encoding. The fusion stage applies symmetric
 cross-attention,
 
 $$
-\mathbf{H}^{(m \to c)} \;=\; \operatorname{CrossAttn}\!\bigl(\mathbf{H}^{(m)}, \mathbf{H}^{(c)}, \mathbf{H}^{(c)}\bigr),
+\mathbf{H}^{(m \to c)} \;=\; \mathrm{CrossAttn}\!\bigl(\mathbf{H}^{(m)}, \mathbf{H}^{(c)}, \mathbf{H}^{(c)}\bigr),
 \qquad
-\mathbf{H}^{(c \to m)} \;=\; \operatorname{CrossAttn}\!\bigl(\mathbf{H}^{(c)}, \mathbf{H}^{(m)}, \mathbf{H}^{(m)}\bigr), \qquad \text{(Eq.\ 4–5)}
+\mathbf{H}^{(c \to m)} \;=\; \mathrm{CrossAttn}\!\bigl(\mathbf{H}^{(c)}, \mathbf{H}^{(m)}, \mathbf{H}^{(m)}\bigr), \qquad \text{(Eq.\ 4–5)}
 $$
 
 followed by a learned sigmoid gate that dynamically rebalances the modalities,
@@ -133,7 +133,7 @@ pooling,
 
 $$
 \mathbf{z} \;=\; \sum_{t=1}^{T} \alpha_{t}\,\mathbf{H}^{(f)}_{t}, \qquad
-\alpha_{t} \;=\; \operatorname{softmax}\!\bigl(\mathbf{w}^{\top} \mathbf{H}^{(f)}_{t}\bigr),
+\alpha_{t} \;=\; \mathrm{softmax}\!\bigl(\mathbf{w}^{\top} \mathbf{H}^{(f)}_{t}\bigr),
 $$
 
 with padded positions deterministically excluded via a `-∞` mask before the
@@ -477,27 +477,7 @@ without altering the foundations established here.
 
 ---
 
-## 12 · Citation
-
-If this implementation supports your work, please cite the original manuscript:
-
-```bibtex
-@article{Ma2026Microbiome,
-  title   = {Gut microbiome temporal dynamics predict healthcare-associated
-             infections days before clinical detection: a multi-database
-             deep learning study in cancer patients},
-  author  = {Ma, Bin and Yang, Xiaoyu and Liao, Zhixuan and others},
-  journal = {npj Digital Medicine},
-  year    = {2026},
-}
-```
-
-The repository itself is intended to be cited as a software artefact (DOI to
-follow on archival release) alongside the manuscript.
-
----
-
-## 13 · License
+## 12 · License
 
 Released for research purposes accompanying the manuscript. The source includes
 no proprietary patient data, no third-party code, and no model weights derived
