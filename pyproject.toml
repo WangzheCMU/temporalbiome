@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "temporalbiome"
+version = "0.0.1"
+description = "Non-neural foundations for treatment-aware longitudinal microbiome risk scoring"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+]
+
+[project.optional-dependencies]
+neural = [
+    "torch>=2.1",
+]
+test = [
+    "pytest>=8.0",
+    "hypothesis>=6.100",
+    "torch>=2.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning:hypothesis.*",
+    "ignore::UserWarning:torch.nn.modules.transformer",
+    "ignore::UserWarning:torch.nested",
+    "ignore::FutureWarning:torch.*",
+]
